@@ -7,8 +7,10 @@
 - Proposed store layout and open questions are in [docs/design-decisions.md](docs/design-decisions.md).
   The proposal is one repository at `eccofs_icechunks/` with groups `/avg`, `/his`, `/qck` and `/sta`, and the inputs excluded.
 - No build code written yet. No Icechunk store created yet.
-- This work is on branch `docs/eccofs-survey-and-handoff`, in PR #1 (https://github.com/charan0520/eccofs_demo/pull/1) to `main`, awaiting the owner's approval.
-  The team's design questions are in the PR description.
+- This work was merged to `main` via PR #1 on the original GitHub repo `charan0520/eccofs_demo`.
+  **That repo was deleted (2026-11-18), and PR #1 with its 8 design questions and any replies went with it.**
+  The repo is being recreated as `charan0520/models_chunking`; the questions need re-posting there
+  (they are in `docs/design-decisions.md`).
 
 ## FIRST THING next session: check GitHub for responses
 
@@ -16,8 +18,8 @@ Before any planning or code, read the team's replies:
 
 ```bash
 gh pr list --head docs/eccofs-survey-and-handoff --state all
-gh pr view 1 --comments          # replies to the design questions
-gh api repos/charan0520/eccofs_demo/pulls/1/comments   # inline review comments
+gh pr view <N> --comments        # replies to the re-posted design questions
+gh api repos/charan0520/models_chunking/pulls/<N>/comments   # inline review comments
 gh issue list                        # in case the team opened an issue instead
 ```
 
