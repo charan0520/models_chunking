@@ -222,3 +222,6 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+rtofs_icechunks/
+rtofs/.ref_cache/
+.scratch/
