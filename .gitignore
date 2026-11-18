@@ -222,3 +222,7 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+
+# Local Icechunk stores (metadata only; rebuilt by scripts)
+eccofs_icechunks/
+txla_icechunks/
