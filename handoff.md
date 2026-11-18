@@ -18,8 +18,7 @@ gh pr view 2 --json mergeable --jq .mergeable
 ```
 
 - **PR #2** had a `.gitignore` conflict with the merged TXLA work; I merged `origin/main` into the branch
-  and pushed (`473be8b`). GitHub had not finished rechecking mergeability at handoff time. If it still says
-  `CONFLICTING`, re-check before doing anything else.
+  and pushed (`473be8b`). GitHub now reports it `MERGEABLE`.
 - Do **not** merge PR #2 without the owner's approval. Ask before deleting `feat/txla-virtual-icechunk`
   (merged) or any other branch.
 
