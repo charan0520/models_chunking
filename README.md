@@ -1,6 +1,11 @@
-# eccofs_demo
+# models_chunking
 
-Demo repository for ECCOFS.
+Surveys, source audits and virtual [Icechunk](https://icechunk.io) stores for ocean model output.
+
+| Dataset | Where | Status |
+|---|---|---|
+| NOAA ECCOFS (`s3://noaa-nos-eccofs-pds`) | `docs/`, `handoff.md` | survey and design proposal; no store yet |
+| TXLA ROMS forecast (TAMU-CC) | `txla/` | virtual store built locally (`txla_icechunks/`) |
 
 ## License
 
