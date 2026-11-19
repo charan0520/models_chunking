@@ -222,7 +222,10 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-
 # Local Icechunk stores (metadata only; rebuilt by scripts)
 eccofs_icechunks/
 txla_icechunks/
+rtofs_icechunks/
+# RTOFS per-file reference cache, and local scratch files
+rtofs/.ref_cache/
+.scratch/
