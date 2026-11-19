@@ -222,13 +222,10 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# Local Icechunk stores (metadata only; rebuilt by scripts)
+# Virtual Icechunk stores (txla_icechunks/, rtofs_icechunks/, rtofs_icechunks_v1/, hycom_icechunks/)
+# are committed so they can be opened straight from a clone. Only the unbuilt ECCOFS path stays ignored.
 eccofs_icechunks/
-txla_icechunks/
-rtofs_icechunks/
-rtofs_icechunks_v1/
 # RTOFS per-file reference cache, and local scratch files
 rtofs/.ref_cache/
 .scratch/
-hycom_icechunks/
 hycom/.scan_cache.jsonl

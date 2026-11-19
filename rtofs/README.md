@@ -5,7 +5,7 @@ two points in the Gulf of Mexico and the Straits of Florida, read from a **virtu
 [Icechunk](https://icechunk.io) store of the global RTOFS (HYCOM `ATLb2.00`) velocity archive that TAMU-CC
 keeps at <https://hriai01.tamucc.edu/data/MASTR_MODELS/rtofs/history/>.
 
-The store (`rtofs_icechunks_v1/`, about 110 MB) holds only Zarr metadata and byte-range references.
+The store (`rtofs_icechunks_v1/`, about 110 MB, committed to this repo) holds only Zarr metadata and byte-range references.
 **The velocity values stay in the original NetCDF-4 files on TAMU-CC's web server**, so the notebook
 needs network access to that server, and works only while those files are not moved or rewritten.
 

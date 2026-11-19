@@ -13,7 +13,7 @@ that server being up and on its files not being moved. Rewritten files are detec
 | Grid | **regular** lat/lon: `lat` 4,251 (−80 … 90°, 0.04°) × `lon` 4,500 (0 … 359.92° E, 0.08°) × `depth` 40 levels (0 … 5,000 m) |
 | Coverage | 233 runs at 12 UTC, 2025-06-16 … 2026-11-15, leads 0–192 h every 3 h; `/best` 2025-06-16 12:00 … 2026-11-23 12:00 (4,201 three-hourly steps, 1,983 with no file) |
 | Source | 14,574 NetCDF-3 classic files, ≈ 3.06 GB each (≈ 44.6 TB), all referenced; none excluded |
-| Store | `hycom_icechunks/` (local, git-ignored), Icechunk **format v1** (icechunk 1.1.21, Python 3.11) |
+| Store | `hycom_icechunks/` (committed to this repo, ≈ 225 MB), Icechunk **format v1** (icechunk 1.1.21, Python 3.11) |
 | Snapshot | `DC4YJCECQEWDSAG9QC00` on `main`, tag `data-through-2026-11-23` (built 2026-11-19) |
 
 ## Groups
