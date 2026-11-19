@@ -229,3 +229,5 @@ rtofs_icechunks/
 # RTOFS per-file reference cache, and local scratch files
 rtofs/.ref_cache/
 .scratch/
+hycom_icechunks/
+hycom/.scan_cache.jsonl

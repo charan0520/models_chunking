@@ -1,0 +1,8 @@
+# tested 2026-11-19 with Python 3.11.14 (JupyterHub "notebook" conda env); builds and reads
+# hycom_icechunks/ (Icechunk on-disk format v1). icechunk 2.x needs Python >= 3.12.
+icechunk==1.1.21
+xarray==2026.2.0
+zarr==3.1.5
+netCDF4==1.7.2
+numpy==2.3.5
+dask==2026.1.1
