@@ -226,6 +226,7 @@ __marimo__/
 eccofs_icechunks/
 txla_icechunks/
 rtofs_icechunks/
+rtofs_icechunks_v1/
 # RTOFS per-file reference cache, and local scratch files
 rtofs/.ref_cache/
 .scratch/
