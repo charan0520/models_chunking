@@ -40,6 +40,9 @@ from virtualizarr.manifests import ChunkManifest, ManifestArray
 from virtualizarr.manifests.utils import copy_and_replace_metadata
 from virtualizarr.parsers import HDFParser
 
+# Anonymous HTTPS authorization: icechunk 2.x has credentials.HttpAccess; 1.x authorizes with None.
+HTTP_ACCESS = getattr(ic.credentials, "HttpAccess", None)
+
 log = logging.getLogger("rtofs")
 
 SOURCE_PREFIX = "https://hriai01.tamucc.edu/data/MASTR_MODELS/rtofs/history/"  # must end in "/"
@@ -519,7 +522,7 @@ def repo_config(prefix: str = SOURCE_PREFIX) -> ic.RepositoryConfig:
 
 def open_or_create(path: str, prefix: str = SOURCE_PREFIX) -> ic.Repository:
     storage = ic.local_filesystem_storage(path)
-    auth = {prefix: ic.credentials.HttpAccess}
+    auth = {prefix: HTTP_ACCESS}
     if ic.Repository.exists(storage):
         repo = ic.Repository.open(storage, config=repo_config(prefix), authorize_virtual_chunk_access=auth)
     else:
@@ -554,6 +557,37 @@ def _clear_group_keep_grid(store, group: str, sha: str) -> bool:
     return True
 
 
+def _to_icechunk(ds: xr.Dataset, store, group: str, mode: str) -> None:
+    """ds.vz.to_icechunk(store, group=group, mode=mode) on any VirtualiZarr 2.x.
+
+    VirtualiZarr < 2.5 (the newest on Python 3.11, which icechunk 1.x needs) has no `mode=`: it
+    always creates the group and fails if it exists. Emulate "w" by deleting the group first, and
+    "a" by writing into the existing group with the same lower-level writer to_icechunk uses
+    (coordinates via to_zarr(mode="a"), virtual arrays via require_array)."""
+    import inspect
+
+    import zarr
+
+    if "mode" in inspect.signature(ds.vz.to_icechunk).parameters:
+        ds.vz.to_icechunk(store, group=group, mode=mode)
+        return
+    from virtualizarr.writers.icechunk import (validate_virtual_chunk_containers,
+                                               write_virtual_dataset_to_icechunk_group)
+    from zarr.storage import StorePath
+
+    root = zarr.open_group(store, mode="a")
+    exists = group in root
+    if mode == "w" and exists:
+        del root[group]
+        exists = False
+    if not exists:
+        ds.vz.to_icechunk(store, group=group)
+        return
+    validate_virtual_chunk_containers(store.session.config, [ds])
+    g = zarr.Group.open(StorePath(store, path=group), zarr_format=3)
+    write_virtual_dataset_to_icechunk_group(vds=ds, store=store, group=g)
+
+
 def write(repo: ic.Repository, refs: list[FileRef], t: Templates, message: str) -> str:
     """Replace both groups, one (group, variable) per commit on a temporary build branch, then move
     `main` to the final snapshot in one step, so readers of main never see a half-written store.
@@ -584,7 +618,7 @@ def write(repo: ic.Repository, refs: list[FileRef], t: Templates, message: str) 
                 mode = "a"
                 ds = ds.drop_vars(GRID_VARS)
             set_encodings(ds)
-            ds.vz.to_icechunk(session.store, group=group, mode=mode)
+            _to_icechunk(ds, session.store, group, mode)
             if mode == "a":  # the writer lists only the coords it wrote; keep lat/lon as coordinates
                 g = zarr.open_group(session.store, mode="a", path=group)
                 coords = (g.attrs.get("coordinates") or "").split()
@@ -602,7 +636,7 @@ def open_readonly(path: str, group: str, prefix: str = SOURCE_PREFIX, chunks=Non
     """Consumer read path: a fresh Repository.open with explicit anonymous HTTP authorization."""
     repo = ic.Repository.open(
         ic.local_filesystem_storage(path),
-        authorize_virtual_chunk_access={prefix: ic.credentials.HttpAccess},
+        authorize_virtual_chunk_access={prefix: HTTP_ACCESS},
     )
     store = repo.readonly_session("main").store
     return xr.open_zarr(store, group=group, consolidated=False, chunks=chunks, zarr_format=3)

@@ -12,6 +12,9 @@ import icechunk as ic
 import xarray as xr
 import zarr
 
+# Anonymous HTTPS authorization: icechunk 2.x has credentials.HttpAccess; 1.x authorizes with None.
+HTTP_ACCESS = getattr(ic.credentials, "HttpAccess", None)
+
 
 def open_rtofs(group="best", repo_path="rtofs_icechunks", branch="main", tag=None, snapshot_id=None,
                chunks={}, concurrency=32):
@@ -23,7 +26,7 @@ def open_rtofs(group="best", repo_path="rtofs_icechunks", branch="main", tag=Non
     # 1. read the persisted virtual chunk containers, 2. authorize each (anonymous HTTPS)
     prefixes = list((ic.Repository.fetch_config(storage).virtual_chunk_containers or {}).keys())
     repo = ic.Repository.open(
-        storage, authorize_virtual_chunk_access={p: ic.credentials.HttpAccess for p in prefixes}
+        storage, authorize_virtual_chunk_access={p: HTTP_ACCESS for p in prefixes}
     )
     if snapshot_id:
         session = repo.readonly_session(snapshot_id=snapshot_id)
