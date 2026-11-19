@@ -8,7 +8,7 @@ being up and on its files not being moved or rewritten.
 
 | | |
 |---|---|
-| Repository | `txla_icechunks/` (local, git-ignored; rebuilt by `build_txla_icechunk.py`) |
+| Repository | `txla_icechunks/` (committed to this repo, format v2; rebuilt by `build_txla_icechunk.py`) |
 | Source | 69 NetCDF-3 classic files, 662.4 GB, counted 2026-11-18 |
 | Coverage | runs starting 2026-08-23 → 2026-11-16, valid times 2026-08-23 01:00 → 2026-11-20 00:00 UTC |
 | Grid | 670 × 190 curvilinear (`lon`, `lat` 2-D), 28 fixed depths 1–1000 m |
